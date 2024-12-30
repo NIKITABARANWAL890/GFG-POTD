@@ -1,0 +1,18 @@
+class Solution {
+  public:
+    // Function to return the count of number of elements in union of two arrays.
+    int findUnion(vector<int>& a, vector<int>& b) {
+        // code here
+        set<int>sta;
+        set<int>stb;
+        for(int i=0; i<a.size(); i++){
+            sta.insert(a[i]);
+        }
+        for(int i=0; i<b.size(); i++){
+            if(sta.find(b[i]) == sta.end()){
+                stb.insert(b[i]);
+            }
+        }
+        return sta.size()+stb.size();
+    }
+};
