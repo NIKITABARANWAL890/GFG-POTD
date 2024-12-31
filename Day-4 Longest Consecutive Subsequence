@@ -1,0 +1,24 @@
+int longestConsecutive(vector<int>& arr) {
+        // Your code here
+        int maxElement = *max_element(arr.begin(),arr.end());
+        unordered_map<int,int>mp;
+        for(int i=0; i<arr.size(); i++)
+        {
+            mp[arr[i]]++;
+        }
+        
+        int cnt = 0;
+        int maxCnt = 0;
+        for(int i=0; i<=maxElement; i++)
+        {
+            while(mp.find(i) != mp.end())
+            {
+                cnt++;
+                i++;
+            }
+            
+            maxCnt = max(maxCnt, cnt);
+            cnt = 0;
+        }
+       return maxCnt;
+    }
