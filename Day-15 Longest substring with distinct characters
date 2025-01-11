@@ -1,0 +1,21 @@
+
+class Solution {
+public:
+    int longestUniqueSubstr(string s) {
+        // Array to store the last occurrence of each character
+        vector<int> arr(26, 0); // Initialize with 0
+        int l = 0; // Left pointer
+        int maxlen = 0; // Variable to store the maximum length
+
+        for (int r = 0; r < s.length(); r++) {
+            int charIndex = s[r] - 'a'; // Calculate character index
+            if (arr[charIndex] != 0) {
+                l = max(l, arr[charIndex]); // Update the left pointer
+            }
+            arr[charIndex] = r + 1; // Update the last occurrence of the character
+            maxlen = max(maxlen, r - l + 1); // Update the maximum length
+        }
+
+        return maxlen;
+    }
+};
