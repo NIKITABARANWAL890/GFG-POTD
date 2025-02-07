@@ -1,0 +1,19 @@
+class Solution {
+  public:
+  vector<int>getInorder(Node* root, vector<int>&inorderVec){
+      if(root==NULL){
+          return inorderVec;
+      }
+      getInorder(root->left, inorderVec);
+      inorderVec.push_back(root->data);
+      getInorder(root->right, inorderVec);
+      
+      return inorderVec;
+  }
+    // Function to return a list containing the inorder traversal of the tree.
+    vector<int> inOrder(Node* root) {
+        // Your code here
+        vector<int>inorderVec;
+        return getInorder(root, inorderVec);
+    }
+};
