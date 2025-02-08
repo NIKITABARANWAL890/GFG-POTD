@@ -1,0 +1,73 @@
+class Solution {
+  public:
+  void LeftTraversal(Node* root, vector<int>&ans){
+        
+        if(root==NULL || (root->left==NULL && root->right==NULL)){
+            return;
+        }
+        //push the data into ans
+        ans.push_back(root->data);
+        
+        if(root->left)
+        {
+            LeftTraversal(root->left, ans);
+        }
+        else
+        {
+            LeftTraversal(root->right, ans);
+        }
+    }
+    
+    void LeafTraversal(Node* root, vector<int>&ans){
+        if(root==NULL){
+            return;
+        }
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+        }
+        
+        LeafTraversal(root->left, ans);
+        LeafTraversal(root->right, ans);
+        
+    }
+    void RightTraversal(Node* root, vector<int>&ans){
+        
+        if(root==NULL || (root->left==NULL && root->right==NULL)){
+            return;
+        }
+        
+        if(root->right){
+            RightTraversal(root->right, ans);
+        }
+        else{
+            RightTraversal(root->left, ans);
+        }
+        
+        // wapas aane par data store karna hai
+        ans.push_back(root->data);
+    }
+    
+    vector<int> boundaryTraversal(Node *root) {
+        // code here
+        //create ans vector
+        vector<int>ans;
+        if(root==NULL){
+            return ans;
+        }
+        //push root into ans
+        ans.push_back(root->data);
+        
+        //Left Traversal
+        LeftTraversal(root->left, ans);
+        //Leaf Node Traversal
+        //left Leaf
+        LeafTraversal(root->left, ans);
+        //right Leaf
+        LeafTraversal(root->right, ans);
+        // Right Traversal
+        RightTraversal(root->right, ans);
+        
+        return ans;
+        
+    }
+};
