@@ -1,0 +1,46 @@
+
+class Solution {
+  public:
+    void pushAllLeft(Node* root, std::stack<Node*>& leftStack) {
+        while (root) {
+            leftStack.push(root);
+            root = root->left;
+        }
+    }
+
+    void pushAllRight(Node* root, std::stack<Node*>& rightStack) {
+        while (root) {
+            rightStack.push(root);
+            root = root->right;
+        }
+    }
+
+    bool findTarget(Node* root, int k) {
+        if (!root) return false;
+
+        stack<Node*> leftStack, rightStack;
+        pushAllLeft(root, leftStack);
+        pushAllRight(root, rightStack);
+
+        while (!leftStack.empty() && !rightStack.empty()) {
+            Node* leftNode = leftStack.top();
+            Node* rightNode = rightStack.top();
+
+            if (leftNode == rightNode) break; // Prevent duplicate access
+
+            int sum = leftNode->data + rightNode->data;
+
+            if (sum == k) return true;
+            else if (sum > k) {
+                // Move right pointer left
+                rightStack.pop();
+                pushAllRight(rightNode->left, rightStack);
+            } else {
+                // Move left pointer right
+                leftStack.pop();
+                pushAllLeft(leftNode->right, leftStack);
+            }
+        }
+        return false;
+    }
+};
