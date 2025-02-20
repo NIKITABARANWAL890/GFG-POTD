@@ -1,0 +1,42 @@
+class Solution {
+  public:
+    vector<double> getMedian(vector<int> &arr) {
+        // code here
+        int n = arr.size();
+        vector<double> ans(n);
+        priority_queue<int> max_hp;
+        priority_queue<int, vector<int>, greater<int>> min_hp;
+        
+        for(int i=0; i<n; i++) {
+            int max_size = max_hp.size(), min_size = min_hp.size();
+            
+            if(max_size - min_size == 0) {
+                if(min_hp.empty()) max_hp.push(arr[i]);
+                else {
+                    int top = min_hp.top();
+                    if(top < arr[i]) {
+                        max_hp.push(top);
+                        min_hp.pop();
+                        min_hp.push(arr[i]);
+                    }
+                    else max_hp.push(arr[i]);
+                }
+                ans[i] = (double) max_hp.top();
+            }
+            else {
+                int top = max_hp.top();
+                if(top < arr[i]) min_hp.push(arr[i]);
+                else {
+                    min_hp.push(top);
+                    max_hp.pop();
+                    max_hp.push(arr[i]);
+                }
+                int x = max_hp.top(), y = min_hp.top();
+                ans[i] = (double) (x+y)/2.0;
+            }
+        }
+        
+        return ans;
+        
+    }
+};
