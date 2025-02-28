@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int Solve(int op1, int op2, string op) {
+        if (op == "+") return op1 + op2;
+        else if (op == "-") return op1 - op2;
+        else if (op == "*") return op1 * op2;
+        else return op1 / op2; 
+    }
+
+    int evaluate(vector<string>& arr) {
+        stack<int> st; 
+        
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr[i] == "+" || arr[i] == "-" || arr[i] == "*" || arr[i] == "/") {
+                int op2 = st.top(); st.pop();
+                int op1 = st.top(); st.pop();
+                
+                int result = Solve(op1, op2, arr[i]);
+                
+                st.push(result);
+            } else {
+                st.push(stoi(arr[i]));
+            }
+        }
+        
+        return st.top(); 
+    }
+};
