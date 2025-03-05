@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    int longestStringChain(vector<string>& words) {
+        // Sort words based on length
+        sort(words.begin(), words.end(), [](const string &a, const string &b){
+            return a.length() < b.length();
+        });
+
+        int n = words.size();
+        vector<int> dp(n, 1); // DP array to store longest chain at each index
+        map<string, int> mp;  // Maps each word to its index in `dp`
+        
+        int maxi = 1; // Store the longest chain found
+        
+        for (int i = 0; i < n; i++) { // Start loop from 0 (fixed bug)
+            for (int j = 0; j < words[i].size(); j++) {
+                string newStr = words[i]; 
+                newStr.erase(j, 1); // Remove one character to check predecessor
+                int maxVal=0;
+                if (mp.find(newStr) != mp.end()) {
+                    maxVal = dp[mp[newStr]]+1;
+                    dp[i] = max(dp[i], maxVal); // Fix incorrect update
+                }
+            }
+            maxi = max(maxi, dp[i]); // Track longest chain found
+            mp[words[i]] = i; // Store index in the map
+        }
+        
+        return maxi; // Return the longest chain found
+    }
+};
